@@ -1,0 +1,1 @@
+Deply de la app:      eas build --platform android
