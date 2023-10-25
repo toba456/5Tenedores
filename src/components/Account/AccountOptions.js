@@ -4,6 +4,7 @@ import { ListItem, Icon } from "@rneui/base";
 import { Modal } from "../Shared";
 import { Text } from "@rneui/themed";
 import { ChangeDisplayNameForm } from "./ChangeDisplayNameForm";
+import { ChangeEmailForm } from "./ChangeEmailForm";
 
 export const AccountOptions = ({ onReload }) => {
   const [showModal, setShowModal] = useState(false);
@@ -18,7 +19,9 @@ export const AccountOptions = ({ onReload }) => {
       );
     }
     if (key === "email") {
-      setRenderComponent(<Text>Cambiando email</Text>);
+      setRenderComponent(
+        <ChangeEmailForm onReload={onReload} onClose={onCloseOpenModal} />
+      );
     }
     if (key === "password") {
       setRenderComponent(<Text>Cambiando contraseña</Text>);

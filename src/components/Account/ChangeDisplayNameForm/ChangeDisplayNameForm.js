@@ -6,7 +6,7 @@ import { useFormik } from "formik";
 import { getAuth, updateProfile } from "firebase/auth";
 import { initialValues, validationSchema } from "./ChangeDisplayNameForm.data";
 import Toast from "react-native-toast-message";
-import { capitalizeWords } from "../../../utils/regularExpressions";
+import { capitalizeWords } from "../../../utils";
 
 export const ChangeDisplayNameForm = ({ onClose, onReload }) => {
   const formik = useFormik({
@@ -29,7 +29,7 @@ export const ChangeDisplayNameForm = ({ onClose, onReload }) => {
         Toast.show({
           type: "error",
           position: "bottom",
-          text1: "Error a cambiar el nombre y apellidos",
+          text1: "Error al cambiar el nombre y apellidos",
         });
       }
     },

@@ -10,7 +10,6 @@ import { Text } from "@rneui/themed";
 export const InfoUser = ({ setLoading, setLoadingText }) => {
   const { uid, photoURL, displayName, email } = getAuth().currentUser;
   const [avatar, setAvatar] = useState(photoURL);
-
   const changeAvatar = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,

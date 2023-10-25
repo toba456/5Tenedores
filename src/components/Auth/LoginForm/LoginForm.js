@@ -6,7 +6,7 @@ import { useFormik } from "formik";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { initialValues, validationSchema } from "./LoginForm.data";
 import { useNavigation } from "@react-navigation/native";
-import { screen } from "../../../utils";
+import { auth, screen } from "../../../utils";
 import Toast from "react-native-toast-message";
 
 export const LoginForm = () => {
@@ -19,7 +19,6 @@ export const LoginForm = () => {
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
-        const auth = getAuth();
         await signInWithEmailAndPassword(
           auth,
           formValue.email,

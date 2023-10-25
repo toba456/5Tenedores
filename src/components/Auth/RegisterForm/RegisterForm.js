@@ -20,11 +20,12 @@ export const RegisterForm = () => {
     onSubmit: async (formValue) => {
       try {
         const auth = getAuth();
-        await createUserWithEmailAndPassword(
+        const userCredentials = await createUserWithEmailAndPassword(
           auth,
           formValue.email.toLocaleLowerCase(),
           formValue.password
         );
+
         navigation.navigate(screen.account.account);
       } catch (error) {
         Toast.show({
