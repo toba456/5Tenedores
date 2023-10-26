@@ -18,6 +18,6 @@ export const validationSchema = () => {
     email: Yup.string()
       .email("No es un email válido")
       .required("Campo obligatorio"),
-    description: Yup.string(),
+    description: Yup.string().required("Campo obligatorio"),
   });
 };
