@@ -16,7 +16,7 @@ export const UserGuestScreen = (props) => {
         source={require("../../../../assets/img/user-guest.png")}
         style={styles.image}
       />
-      <Text style={styles.title}>Consultar tu perfil de restoyurant</Text>
+      <Text style={styles.title}>Consultar tu perfil de restourant</Text>
       <Text style={styles.description}>
         ¿Cómo describirias tu mejor restourante? Busca y visualiza los mejores
         restourantes de una forma sencilla, vota cual te ha gustado mas y

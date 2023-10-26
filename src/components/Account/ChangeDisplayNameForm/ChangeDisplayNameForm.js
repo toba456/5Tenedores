@@ -25,6 +25,12 @@ export const ChangeDisplayNameForm = ({ onClose, onReload }) => {
 
         onReload();
         onClose();
+
+        Toast.show({
+          type: "success",
+          position: "bottom",
+          text1: "Nombre y apellidos cambiados",
+        });
       } catch (error) {
         Toast.show({
           type: "error",

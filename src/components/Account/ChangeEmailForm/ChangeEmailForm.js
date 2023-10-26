@@ -1,14 +1,11 @@
-import { Button, Icon, Input } from "@rneui/base";
-import React, { Children, useState } from "react";
+import { Button, Input } from "@rneui/base";
+import React, { useState } from "react";
 import { styles } from "./ChangeEmailForm.styles";
 import { View } from "react-native";
 import { useFormik } from "formik";
 import {
-  getAuth,
-  updateEmail,
   EmailAuthProvider,
   reauthenticateWithCredential,
-  sendEmailVerification,
   verifyBeforeUpdateEmail,
   signOut,
 } from "firebase/auth";
@@ -19,14 +16,14 @@ import { auth } from "../../../utils";
 export const ChangeEmailForm = ({ onReload, onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
 
-  async function firebaseEmailReset(user, email) {
+  const firebaseEmailReset = async (user, email) => {
     try {
       await verifyBeforeUpdateEmail(user, email);
       signOut(auth);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const formik = useFormik({
     initialValues: initialValues(),
@@ -35,16 +32,20 @@ export const ChangeEmailForm = ({ onReload, onClose }) => {
     onSubmit: async (formValue) => {
       try {
         const currentUser = auth.currentUser;
+
         const credentials = EmailAuthProvider.credential(
           currentUser.email,
           formValue.password
         );
+
         await firebaseEmailReset(currentUser, formValue.email);
         await reauthenticateWithCredential(currentUser, credentials);
+
         Toast.show({
           type: "info",
           position: "bottom",
           text1: "Verificar correo electronico",
+          visibilityTime: 4000,
         });
 
         onReload();

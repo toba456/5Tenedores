@@ -5,6 +5,7 @@ import { Modal } from "../Shared";
 import { Text } from "@rneui/themed";
 import { ChangeDisplayNameForm } from "./ChangeDisplayNameForm";
 import { ChangeEmailForm } from "./ChangeEmailForm";
+import { ChangePasswordForm } from "./ChangePasswordForm";
 
 export const AccountOptions = ({ onReload }) => {
   const [showModal, setShowModal] = useState(false);
@@ -24,7 +25,7 @@ export const AccountOptions = ({ onReload }) => {
       );
     }
     if (key === "password") {
-      setRenderComponent(<Text>Cambiando contraseña</Text>);
+      setRenderComponent(<ChangePasswordForm onClose={onCloseOpenModal} />);
     }
     onCloseOpenModal();
   };
