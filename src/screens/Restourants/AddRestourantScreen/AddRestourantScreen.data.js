@@ -1,3 +1,4 @@
+import { yupToFormErrors } from "formik";
 import * as Yup from "yup";
 
 export const initialValues = () => {
@@ -8,6 +9,7 @@ export const initialValues = () => {
     email: "",
     description: "",
     location: null,
+    images: [],
   };
 };
 
@@ -21,5 +23,8 @@ export const validationSchema = () => {
       .required("Campo obligatorio"),
     description: Yup.string().required("Campo obligatorio"),
     location: Yup.object().required("La localización es requerida"),
+    images: Yup.array()
+      .min(1, "Se requiere una imagen como mínimo")
+      .required("La imagen es obligatoria"),
   });
 };

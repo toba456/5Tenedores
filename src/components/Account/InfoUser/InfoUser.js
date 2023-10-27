@@ -6,11 +6,30 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import * as ImagePicker from "expo-image-picker";
 import { styles } from "./InfoUser.styles";
 import { Text } from "@rneui/themed";
+import Toast from "react-native-toast-message";
 
 export const InfoUser = ({ setLoading, setLoadingText }) => {
   const { uid, photoURL, displayName, email } = getAuth().currentUser;
   const [avatar, setAvatar] = useState(photoURL);
+
+  const getGalleryPermissions = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (status !== "granted") {
+      Toast.show({
+        type: "info",
+        position: "bottom",
+        text1: "Activa los permisos de acceso a la galería",
+        visibilityTime: 4000,
+      });
+    }
+    return status;
+  };
+
   const changeAvatar = async () => {
+    const status = await getGalleryPermissions();
+    if (status !== "granted") return;
+
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
