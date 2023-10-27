@@ -9,9 +9,14 @@ import { Button } from "@rneui/base";
 import { styles } from "./AddRestourantScreen.styles";
 import { useFormik } from "formik";
 import { v4 as uuid } from "uuid";
+import { doc, setDoc } from "firebase/firestore";
 import { initialValues, validationSchema } from "./AddRestourantScreen.data";
+import { db } from "../../../utils";
+import { useNavigation } from "@react-navigation/native";
 
 export const AddRestourantScreen = () => {
+  const navigation = useNavigation();
+
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: validationSchema(),
@@ -23,7 +28,8 @@ export const AddRestourantScreen = () => {
         newData.id = uuid();
         newData.createdAt = new Date();
 
-        console.log(newData);
+        await setDoc(doc(db, "restourants", newData.id), newData);
+        navigation.goBack();
       } catch (error) {
         console.log(error);
       }
