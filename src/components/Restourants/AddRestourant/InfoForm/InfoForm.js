@@ -22,7 +22,7 @@ export const InfoForm = ({ formik }) => {
           rightIcon={{
             type: "material-community",
             name: "map-marker-radius",
-            color: "#c2c2c2",
+            color: getColorIconMap(formik),
             onPress: onOpenCloseMap,
           }}
           onChangeText={(text) => formik.setFieldValue("address", text.trim())}
@@ -48,7 +48,13 @@ export const InfoForm = ({ formik }) => {
           errorMessage={formik.errors.description}
         />
       </View>
-      <MapForm show={showMap} close={onOpenCloseMap} />
+      <MapForm show={showMap} close={onOpenCloseMap} formik={formik} />
     </>
   );
+};
+
+const getColorIconMap = (formik) => {
+  if (formik.errors.location) return "#ff0000";
+  if (formik.values.location) return "#00a680";
+  return "#c2c2c2";
 };
