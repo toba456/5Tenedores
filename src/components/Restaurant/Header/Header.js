@@ -10,7 +10,7 @@ export const Header = ({ restaurant }) => {
         <Text style={styles.name}>{restaurant?.name}</Text>
         <AirbnbRating
           size={20}
-          defaultRating={4}
+          defaultRating={restaurant.ratingMedia || 0}
           isDisabled
           showRating={false}
         />

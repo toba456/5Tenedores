@@ -3,6 +3,7 @@ const restourantStack = {
   restourants: "Restourants",
   addRestourant: "AddRestourant",
   restaurant: "Restaurant",
+  addReviewRestaurant: "AddReviewRestaurant",
 };
 const favoritesStack = {
   tab: "FavoritesScreen",
