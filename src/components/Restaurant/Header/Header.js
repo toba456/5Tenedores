@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { Text, Rating, AirbnbRating } from "@rneui/base";
+import { Text, AirbnbRating } from "@rneui/base";
 import { styles } from "./Header.styles";
 
 export const Header = ({ restaurant }) => {
