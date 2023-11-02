@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { db } from "../../../utils";
 import { Carousel, Loading } from "../../../components/Shared";
 import {
+  BtnFavorite,
   BtnReviewForm,
   Header,
   Info,
@@ -41,6 +42,7 @@ export const RestaurantScreen = ({ route }) => {
       <Info restaurant={restaurant} />
       <BtnReviewForm idRestaurant={route.params.id} />
       <Reviews idRestaurant={route.params.id} />
+      <BtnFavorite idRestaurant={route.params.id} />
     </ScrollView>
   );
 };
