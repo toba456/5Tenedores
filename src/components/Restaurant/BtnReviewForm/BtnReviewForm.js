@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { Text, Button } from "@rneui/base";
+import { query, collection, where, onSnapshot } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth, screen } from "../../../utils";
-import { styles } from "./BtnReviewForm.styles";
+import { auth, db, screen } from "../../../utils";
 import { useNavigation } from "@react-navigation/native";
+import { styles } from "./BtnReviewForm.styles";
 
 export const BtnReviewForm = ({ idRestaurant }) => {
   const [hasLogged, setHasLogged] = useState(false);
+  const [hasReview, setHasReview] = useState(false);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -15,6 +17,22 @@ export const BtnReviewForm = ({ idRestaurant }) => {
       setHasLogged(user ? true : false);
     });
   }, []);
+
+  useEffect(() => {
+    if (hasLogged) {
+      const q = query(
+        collection(db, "reviews"),
+        where("idRestaurant", "==", idRestaurant),
+        where("idUser", "==", auth.currentUser.uid)
+      );
+
+      onSnapshot(q, (snapshot) => {
+        if (snapshot.docs.length > 0) {
+          setHasReview(true);
+        }
+      });
+    }
+  }, [hasLogged]);
 
   const goToLogin = () => {
     navigation.navigate(screen.account.tab, { screen: screen.account.login });
@@ -25,6 +43,16 @@ export const BtnReviewForm = ({ idRestaurant }) => {
       idRestaurant,
     });
   };
+
+  if (hasLogged && hasReview) {
+    return (
+      <View style={styles.content}>
+        <Text style={styles.textSenReview}>
+          Ya has enviado un review a este restaurante
+        </Text>
+      </View>
+    );
+  }
   return (
     <View style={styles.content}>
       {hasLogged ? (

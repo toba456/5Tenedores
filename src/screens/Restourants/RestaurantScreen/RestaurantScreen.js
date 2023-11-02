@@ -12,8 +12,13 @@ import {
 import { useState } from "react";
 import { useEffect } from "react";
 import { db } from "../../../utils";
-import { Carousel, Loading } from "../../Shared";
-import { BtnReviewForm, Header, Info } from "..";
+import { Carousel, Loading } from "../../../components/Shared";
+import {
+  BtnReviewForm,
+  Header,
+  Info,
+  Reviews,
+} from "../../../components/Restaurant";
 
 const { width } = Dimensions.get("window");
 
@@ -34,7 +39,8 @@ export const RestaurantScreen = ({ route }) => {
       <Carousel arrayImages={restaurant.images} height={250} width={width} />
       <Header restaurant={restaurant} />
       <Info restaurant={restaurant} />
-      <BtnReviewForm idRestaurant={restaurant.id} />
+      <BtnReviewForm idRestaurant={route.params.id} />
+      <Reviews idRestaurant={route.params.id} />
     </ScrollView>
   );
 };
