@@ -6,7 +6,7 @@ import MapView, { Marker } from "react-native-maps";
 export const Map = ({ location, name }) => {
   return (
     <MapView style={styles.content} initialRegion={location}>
-      <Marker coordinate={location} />
+      <Marker coordinate={location} title={name} />
     </MapView>
   );
 };

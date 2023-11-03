@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Children } from "react";
+import React, { useState, useEffect } from "react";
 import { View } from "react-native";
 import { Icon } from "@rneui/base";
 import {
@@ -14,10 +14,17 @@ import {
 import { auth, db } from "../../../utils/firebase";
 import { v4 as uuid } from "uuid";
 import { styles } from "./BtnFavorite.styles";
-import { async } from "@firebase/util";
+import { onAuthStateChanged } from "firebase/auth";
 
 export const BtnFavorite = ({ idRestaurant }) => {
+  const [hasLogged, setHasLogged] = useState(null);
   const [isFavorite, setIsFavorite] = useState(undefined);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setHasLogged(user ? true : false);
+    });
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -28,9 +35,10 @@ export const BtnFavorite = ({ idRestaurant }) => {
         setIsFavorite(false);
       }
     })();
-  }, [idRestaurant]);
+  }, [idRestaurant, hasLogged]);
 
   const getFavorites = async () => {
+    if (!hasLogged) return;
     const q = query(
       collection(db, "favorites"),
       where("idRestaurant", "==", idRestaurant),
@@ -61,17 +69,23 @@ export const BtnFavorite = ({ idRestaurant }) => {
   };
 
   const removeFavorite = async () => {
-    const q = query(
-      collection(db, "favorites"),
-      where("idRestaurant", "==", idRestaurant),
-      where("idUser", "==", auth?.currentUser.uid)
-    );
-    const result = await getDocs(q);
-    if (!result.empty) {
-      const favoriteDoc = result.docs[0];
-      await deleteDoc(favoriteDoc.ref);
+    try {
+      const q = query(
+        collection(db, "favorites"),
+        where("idRestaurant", "==", idRestaurant),
+        where("idUser", "==", auth?.currentUser.uid)
+      );
+      const result = await getDocs(q);
+      if (!result.empty) {
+        const favoriteDoc = result.docs[0];
+        await deleteDoc(favoriteDoc.ref);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
+
+  if (!hasLogged) return null;
   return (
     <View style={styles.content}>
       {isFavorite !== undefined && (

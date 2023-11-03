@@ -25,7 +25,6 @@ const { width } = Dimensions.get("window");
 
 export const RestaurantScreen = ({ route }) => {
   const [restaurant, setRestaurant] = useState(null);
-
   useEffect(() => {
     setRestaurant(null);
     onSnapshot(doc(db, "restourants", route.params.id), (doc) => {

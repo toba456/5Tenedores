@@ -101,7 +101,7 @@ export const Reviews = ({ idRestaurant }) => {
         );
       })}
 
-      {!showAllReviews && (
+      {!showAllReviews && reviews.length > 0 && (
         <Text style={styles.moreCommentBtn} onPress={onShowAllReviews}>
           Ver todos los comentarios
         </Text>
