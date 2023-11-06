@@ -15,7 +15,7 @@ import { db } from "../utils/firebase";
 import { screen } from "../utils";
 
 export const SearchScreen = ({ navigation }) => {
-  const [searchResult, setSearchResult] = useState(null);
+  const [searchResult, setSearchResult] = useState();
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
@@ -48,30 +48,32 @@ export const SearchScreen = ({ navigation }) => {
         }}
       />
       {!searchResult && <Loading show text="Cargando" />}
-      <ScrollView>
-        {!searchResult.length ? (
-          <View style={{ alignItems: "center", marginTop: 20 }}>
-            <Text>No se han encontrado resultados</Text>
-          </View>
-        ) : (
-          searchResult.map((item) => {
-            const data = item.data();
-            return (
-              <ListItem
-                key={data.id}
-                bottomDivider
-                onPress={() => goToRestaurant(data.id)}
-              >
-                <Avatar source={{ uri: data.images[0] }} rounded />
-                <ListItem.Content>
-                  <ListItem.Title>{data.name}</ListItem.Title>
-                </ListItem.Content>
-                <Icon type="material-community" name="chevron-right" />
-              </ListItem>
-            );
-          })
-        )}
-      </ScrollView>
+      {searchResult && (
+        <ScrollView>
+          {!searchResult.length ? (
+            <View style={{ alignItems: "center", marginTop: 20 }}>
+              <Text>No se han encontrado resultados</Text>
+            </View>
+          ) : (
+            searchResult.map((item) => {
+              const data = item.data();
+              return (
+                <ListItem
+                  key={data.id}
+                  bottomDivider
+                  onPress={() => goToRestaurant(data.id)}
+                >
+                  <Avatar source={{ uri: data.images[0] }} rounded />
+                  <ListItem.Content>
+                    <ListItem.Title>{data.name}</ListItem.Title>
+                  </ListItem.Content>
+                  <Icon type="material-community" name="chevron-right" />
+                </ListItem>
+              );
+            })
+          )}
+        </ScrollView>
+      )}
     </>
   );
 };
